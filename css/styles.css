@@ -1,0 +1,26 @@
+.container {
+	max-width: 1200px;
+	margin: auto;
+}
+
+.flex {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.flex a {
+	flex-basis: 25%;
+	margin-bottom: 3em;
+	text-align: center;
+}
+
+
+.search-box {
+	text-align: center;
+}
+
+	.search-box input {
+		margin: 1em 0 2em;
+		border-radius: .25em;
+		padding: .5em;
+	}
