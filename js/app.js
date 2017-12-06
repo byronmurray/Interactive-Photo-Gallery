@@ -8,35 +8,50 @@ document.getElementById('links').onclick = function (event) {
     blueimp.Gallery(links, options);
 };
 
+/*
+	@ string attribute
+	@ var search term
+	return show thumbnails
+*/
+function searchResults(attr, query) {
+	$('.flex a').attr(attr, function(index, value){
+	    return value.toLowerCase();
+	});
 
+	return $('.flex a['+ attr +'*="' + query + '"]').show();
+}
+
+
+/*
+	@ string attribute
+	@ var search term
+	return show thumbnails
+*/
 $('#search').on( "keyup", function() {
-	// get input value
+	
+	// get input value and convert to lowercase
 	var query = search.value.toLowerCase();
-
-	// testing print to console
-	console.log(query);
 
 	// hide all thumbs that are not equal to search results
 	if (query !== '') {
-		
+		$('#search-results').empty();
+
 		$('.flex a').hide();
 		
-		// show .flex a where flex a img title is equal to query else hide
-		$('.flex a').attr('alt', function(index, value){
-		    return value.toLowerCase();
-		});
+		// check search result against tiltle and captions
+		searchResults('alt', query);
+		searchResults('title', query);
 
-		$('.flex a').attr('title', function(index, value){
-		    return value.toLowerCase();
-		});
-
-		var $alt = $('.flex a[alt^="' + query + '"]');
-		$alt.show();
-
-		var $title = $('.flex a[title*="' + query + '"]');
-		$title.show();
+		// print message if search result is null and break loop
+		if (!$(".flex a:visible").length) {
+          $('#search-results').append('Sorry no images were found, please try another search.');
+          $('#search').val("");
+          $('.flex a').show();
+          return false;
+        }
 
 	} else {
+		// if search box is empty show all images
 		$('.flex a').show();
 	}
 	
